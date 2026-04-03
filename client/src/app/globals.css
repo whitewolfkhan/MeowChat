@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #0a0a0f;
+  color: #e2e8f0;
+}
+
+/* ===== SCANLINE OVERLAY ===== */
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 65, 0.08),
+    transparent
+  );
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+  z-index: 100;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100vh); }
+  100% { transform: translateY(100vh); }
+}
+
+/* ===== GLOWING TEXT ===== */
+.text-glow {
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 20px rgba(0, 255, 65, 0.3), 0 0 40px rgba(0, 255, 65, 0.15);
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.text-glow-amber {
+  text-shadow: 0 0 10px rgba(255, 176, 0, 0.5), 0 0 20px rgba(255, 176, 0, 0.3);
+}
+
+.text-glow-red {
+  text-shadow: 0 0 10px rgba(255, 0, 64, 0.5), 0 0 20px rgba(255, 0, 64, 0.3);
+}
+
+/* ===== TERMINAL INPUT ===== */
+.terminal-input {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #1a2332;
+  color: #00ff41;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
+  transition: all 0.3s ease;
+}
+
+.terminal-input:focus {
+  border-color: #00ff41;
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.15), inset 0 0 10px rgba(0, 255, 65, 0.03);
+  outline: none;
+}
+
+.terminal-input::placeholder {
+  color: #1e3a2a;
+}
+
+/* ===== CLASSIFIED STAMP ===== */
+.stamp-classified {
+  color: #ff0040;
+  border: 3px solid #ff0040;
+  transform: rotate(-5deg);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  padding: 0.15rem 0.75rem;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+/* ===== TYPING CURSOR ===== */
+.typing-cursor::after {
+  content: '\2588';
+  animation: blink 1s step-end infinite;
+  color: #00ff41;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ===== MESSAGE ANIMATIONS ===== */
+.message-in {
+  animation: messageSlideIn 0.3s ease-out;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1a2332;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 65, 0.3);
+}
+
+/* ===== NOISE TEXTURE ===== */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.02;
+  z-index: 99;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ===== SCREENSHOT ALERT ===== */
+@keyframes alertPulse {
+  0%, 100% { border-color: rgba(255, 0, 64, 0.4); }
+  50% { border-color: rgba(255, 0, 64, 0.8); box-shadow: 0 0 15px rgba(255, 0, 64, 0.3); }
+}
+.alert-pulse {
+  animation: alertPulse 1s ease-in-out 3;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+  .stamp-classified { display: none; }
+  ::-webkit-scrollbar { width: 3px; }
+}
+
+/* ===== BORDER GLOW ===== */
+.border-glow {
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.15), inset 0 0 10px rgba(0, 255, 65, 0.03);
+}
+
+.border-glow-cyan {
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.15), inset 0 0 10px rgba(0, 212, 255, 0.03);
+}
+
+/* ===== CIPHERTEXT DISPLAY ===== */
+.ciphertext {
+  font-size: 0.6rem;
+  word-break: break-all;
+  color: #4a6741;
+  font-family: var(--font-mono), monospace;
+  line-height: 1.3;
+  opacity: 0.7;
+}
+
+/* ===== CONNECTION PULSE ===== */
+.connection-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.connection-dot.online {
+  background: #00ff41;
+  box-shadow: 0 0 6px #00ff41;
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+.connection-dot.offline {
+  background: #ff0040;
+  box-shadow: 0 0 6px #ff0040;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px currentColor; }
+  50% { opacity: 0.5; box-shadow: 0 0 12px currentColor; }
+}
